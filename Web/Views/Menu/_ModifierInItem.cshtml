@@ -1,0 +1,41 @@
+@model Repository.ViewModel.MenuItemViewModel
+
+<div>
+    <input type="text" value="@Model.ModifierGroups.FirstOrDefault().ModifierGroupId">
+    <div class="modifierHeading d-flex justify-content-between">
+        <div>Modifier2</div>
+        <button type="button" class="btn bg-white border-none">
+            <img src="~/images/Download/trash.svg" width="20px" alt="delete">
+        </button>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-6">
+                <select class="form-select rounded-pill modifierForItemSelect">
+                    <option value="" selected>0</option>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <select class="form-select rounded-pill modifierForItemSelect">
+                    <option value="" selected>0</option>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            Modifiers Items
+            @foreach (var modifier in Model.Modifiers)
+            {
+                <option value="@modifier.ModifierId">
+                    @modifier.Name
+                </option>
+            }
+        </div>
+
+    </div>
+</div>

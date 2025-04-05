@@ -1,0 +1,135 @@
+@model Repository.ViewModel.OrderDetailViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class=" d-flex justify-content-between align-items-center custom-blue-color" style="margin-left: 25%; margin-right: 25%; ">
+    <div class="fw-bold fs-1 d-flex align-items-center">Order Details</div>
+    <a asp-controller="Orders" asp-action="Orders" class="btn custom-blue-border custom-blue-color d-flex align-items-center h-50 fw-bold ms-3">Back</a>
+</div>
+
+<div class=""  style="margin-left: 20%; margin-right: 20%; ">
+    <div class="mx-5 bg-white">
+        <div class=" d-flex justify-content-between">
+            <div class="fw-bold">
+                Order Summary
+            </div>
+            <button type="button" class="btn btn-primary orderExportBtn fw-bold">Export</button>
+        </div>
+        <div>
+            Invoice No. :
+        </div>
+        <div class="d-flex">
+            <div class="ms-1">
+                Paid on : @Model.order.Createdat.ToString("dd-MM-yyyy hh:mm:ss")
+            </div>
+            <div class="ms-5">
+                Modified on : @Model.order.UpdatedAt
+            </div>
+            <div class="ms-5">
+                Order Duration : @(Model.order.UpdatedAt - Model.order.Createdat)
+            </div>
+        </div>
+    </div>
+
+    <div class=" row mx-5 mt-5">
+        <div class="col bg-white m-2">
+            <div class="fw-bold">
+                <img src="" alt="">
+                Customer Details
+            </div>
+            <div class="d-flex flex-column">
+                <div>
+                    Name : @Model.customer.Firstname
+                </div>
+                <div>
+                    Phone : @Model.customer.Phone
+                </div>
+                <div>
+                    No. of Person
+                </div>
+                <div>
+                    Email : @Model.customer.Email
+                </div>
+            </div>
+        </div>
+
+        <div class="col bg-white m-2">
+            <div class="fw-bold">
+                <img src="" alt="">
+                Table Details 
+            </div>
+            <div class="d-flex flex-column">
+                <div>
+                    Table : @Model.table.TableName
+                </div>
+                <div>
+                    Section : @Model.table.SectionName
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class=" row mx-5 bg-white   third mt-4">
+        <div class="fw-bold">
+            Order Items
+        </div>
+
+        <div class="w-100"  style="width: 65vw !important;">
+
+            <table class="table w-100 m-0 fs-6">
+                <thead>
+                    <tr>
+                        <th>
+                            Sr. No
+                        </th>
+                        <th>
+                            Item
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>Price</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @* @foreach (var order in Model.order)
+                    {
+                        <tr>    
+                            <td>@order.Orderid</td>
+                            <td>@order.Orderid</td>
+                            <td>Quantity</td>
+                            <td>Price</td>
+                            <td>@order.TotalAmount</td>
+                        </tr>
+                    } *@
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex flex-column align-items-end justify-content-end pe-5">
+            <div>
+                Subtotal:
+            </div>
+            <div>
+                CGST
+            </div>
+            <div>
+                SGST
+            </div>
+            <div>
+                GST
+            </div>
+            <div>
+                Other
+            </div>
+            <div>
+                Total:
+            </div>
+            
+        </div>
+    </div>
+</div>
