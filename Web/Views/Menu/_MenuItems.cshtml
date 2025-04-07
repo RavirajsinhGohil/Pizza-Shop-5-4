@@ -104,22 +104,19 @@
 <span id="totalItemssss" style="display: none;">@Model.totalItems</span>
 <input type="hidden" id="totalItems" value="@Model.totalItems" />
 <input type="hidden" id="totalPageess" value="@Model.TotalPages" />
+
 <script>
-    $(document).ready(function () {
-       // For menu items all check
-
-});
-
     // Trigger the AJAX call when the edit link is clicked
-    $('body').on('click', '.edit-icon', function (e) {
+    @* $('body').on('click', '.edit-icon', function (e) {
         e.preventDefault();
-        var itemId = $(this).data('id');
+        var itemId = $(this).data('id');y
         $.ajax({
             url: '@Url.Action("EditMenuItem", "Menu")',
             type: 'GET',
             data: { id: itemId },
             success: function (response) {
                 $('#EditItemModal').modal('show');
+                $('#EditItemModal').val(response.data);
                 $('#EditItemModal .modal-content').html(response);
             },
             error: function (xhr, status, error) {
@@ -127,7 +124,7 @@
                 alert('There was an error loading the item data.');
             }
         });
-    });
+    }); *@
 
     $('body').on('submit', '#editMenuItemForm', function (e) {
         e.preventDefault();

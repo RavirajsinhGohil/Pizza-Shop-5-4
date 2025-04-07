@@ -10,7 +10,7 @@ public class MenuService : IMenuService
 {
     private IMenuRepository _menuRepository;
     private IUserService _userService;
-    
+
     public MenuService(IMenuRepository menuRepository, IUserService userService)
     {
         _menuRepository = menuRepository;
@@ -65,7 +65,7 @@ public class MenuService : IMenuService
         return await _menuRepository.GetModifierItemsByModifierGroupAsync(categoryid, searchTerm, page, pageSize);
     }
 
-    
+
 
     public Menucategory GetCategoryForEdit(int categoryId)
     {
@@ -100,23 +100,24 @@ public class MenuService : IMenuService
             Isdeleted = false,
             Createdat = DateTime.Now,
         };
-        _menuRepository.AddItem(menuItem);
+        await _menuRepository.AddItem(menuItem);
 
-        int 
+        int totalItems = await _menuRepository.GetTotalCountOfItems();
 
-        foreach(var modifierGroup in model.ModifierGroupIds)
-        {
-            var modifierMapping = new Itemmodifiergroupmapping
-                {
-                    Itemid = ,
-                    Modifiergroupid = modifierMappingCount
-                };
-        }
+        // foreach (var modifierGroupId in model.ModifierGroupIds)
+        // {
+        //     var modifierMapping = new Itemmodifiergroupmapping
+        //     {
+        //         Itemid = totalItems,
+        //         Modifiergroupid = modifierGroupId
+        //     };
+        //     await _menuRepository.AddItemModifierGroupMappings(modifierMapping);
+        // }
         return true;
     }
 
 
-    public MenuItemViewModel GetMenuItemForEdit(int id)
+    public async Task<MenuItemViewModel> GetMenuItemForEdit(int id)
     {
         var item = _menuRepository.GetItemById(id);
         if (item == null)
@@ -130,30 +131,69 @@ public class MenuService : IMenuService
                             Categoryid = c.Menucategoryid,
                             Name = c.Categoryname
                         }).ToList();
+        
+        Console.WriteLine("123456789");
+
+        // var ItemModifierGroup = await _menuRepository.GetModifierGroupsForEditItem(id);
+        // var modifierGroupIds = ItemModifierGroup.Where(i => i.Itemid == id).Select(i => i.Modifiergroupid).ToList();
 
         return new MenuItemViewModel
-        {
-            Items = new List<ItemViewModel>
             {
-                new ItemViewModel
+                Items = new List<ItemViewModel>
                 {
-                    Itemid = item.Itemid,
-                    Name = item.Itemname,
-                    CategoryId = item.Categoryid,
-                    Itemtype = item.Itemtype,
-                    Rate = item.Rate,
-                    Quantity = item.Quantity,
-                    Unit = item.Unit,
-                    // Isavailable = item.Available,
-                    Tax = item.Tax,
-                    ItemShortCode = item.Itemshortcode,
-                    Description = item.Description,
-                    Itemimage = item.Itemimage,
-                    // Isdeleted = item.Isdeleted,
-                }
-            },
-            Categories = categories
-        };
+                    new ItemViewModel
+                    {
+                        Itemid = item.Itemid,
+                        Name = item.Itemname,
+                        CategoryId = item.Categoryid,
+                        Itemtype = item.Itemtype,
+                        Rate = item.Rate,
+                        Quantity = item.Quantity,
+                        Unit = item.Unit,
+                        Isavailable = true,
+                        Tax = item.Tax,
+                        ItemShortCode = item.Itemshortcode,
+                        Description = item.Description,
+                        Itemimage = item.Itemimage,
+                        Isdeleted = item.Isdeleted,
+                        // ModifierGroupIds = modifierGroupIds
+                    }
+                },
+                Categories = categories
+            };
+
+        // try
+        // {
+        //     return new MenuItemViewModel
+        //     {
+        //         Items = new List<ItemViewModel>
+        //         {
+        //             new ItemViewModel
+        //             {
+        //                 Itemid = item.Itemid,
+        //                 Name = item.Itemname,
+        //                 CategoryId = item.Categoryid,
+        //                 Itemtype = item.Itemtype,
+        //                 Rate = item.Rate,
+        //                 Quantity = item.Quantity,
+        //                 Unit = item.Unit,
+        //                 // Isavailable = item.Available,
+        //                 Tax = item.Tax,
+        //                 ItemShortCode = item.Itemshortcode,
+        //                 Description = item.Description,
+        //                 Itemimage = item.Itemimage,
+        //                 // Isdeleted = item.Isdeleted,
+        //                 ModifierGroupIds = await _menuRepository.GetModifierGroupsForEditItem(id)
+        //             }
+        //         },
+        //         Categories = categories
+        //     };
+        // }
+        // catch (Exception ex)
+        // {
+        //     Console.WriteLine("Exception123 ", ex);
+        //     return null;
+        // }
     }
 
     public bool UpdatedMenuItem(int id, MenuItemViewModel model)
@@ -248,7 +288,7 @@ public class MenuService : IMenuService
 
     public async Task<ModifierGroupViewModel> GetModifierGroupForEdit(int id)
     {
-        Modifiergroup modifierGroup =  _menuRepository.GetModifierGroupById(id);
+        Modifiergroup modifierGroup = _menuRepository.GetModifierGroupById(id);
         List<ModifiersViewModel> existingModifiers = await _menuRepository.GetExistingModifiersForEdit(id);
         ModifierGroupViewModel modifierGroupViewModel = new ModifierGroupViewModel
         {
@@ -313,15 +353,15 @@ public class MenuService : IMenuService
 
     public async Task<bool> addExistingModifiersForEdit(int modifierGroupId, string name, string description, List<int> selectedModifiers)
     {
-        Modifiergroup modifierGroup = new Modifiergroup 
+        Modifiergroup modifierGroup = new Modifiergroup
         {
             Modifiergroupid = modifierGroupId,
             Modifiername = name,
             Description = description
         };
 
-        _menuRepository.UpdateModifierGroup(modifierGroup); 
-        
+        _menuRepository.UpdateModifierGroup(modifierGroup);
+
         for (int i = 0; i < selectedModifiers.Count; i++)
         {
             var modifierId = selectedModifiers[i];
@@ -406,5 +446,10 @@ public class MenuService : IMenuService
         // _db.SaveChanges();
         return true;
     }
+
+    // MenuItemViewModel IMenuService.GetMenuItemForEdit(int id)
+    // {
+    //     throw new NotImplementedException();
+    // }
 
 }

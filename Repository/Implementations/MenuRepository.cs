@@ -217,7 +217,7 @@ public class MenuRepository : IMenuRepository
 
     public async Task<bool> AddItem(Item item)
     {
-        _dbo.Items.Add(item);
+        await _dbo.Items.AddAsync(item);
         await _dbo.SaveChangesAsync();
         return true;
     }
@@ -327,6 +327,27 @@ public class MenuRepository : IMenuRepository
                         ModifierGroupId = m.Modifiergroupid,
                         modifierGroupName = m.Modifiername
                     }).ToList();
+    }
+
+    public async Task<int> GetTotalCountOfItems()
+    {
+        return await _dbo.Items.MaxAsync(i => i.Itemid);
+    }
+
+    public async Task<List<Itemmodifiergroupmapping>> GetModifierGroupsForEditItem(int itemId)
+    {
+        try
+        {
+            return  _dbo.Itemmodifiergroupmappings.ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception123 ", ex);
+            return null;
+            // throw;
+        }
+        
+        
     }
 
 }

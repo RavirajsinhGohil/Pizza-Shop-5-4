@@ -29,4 +29,6 @@ public interface IMenuRepository
     int GetTotalCountOfModifierMapping();
     Task<List<ModifiersViewModel>> GetExistingModifiersForEdit(int id);
     Task<List<ModifierGroupViewModel>> GetModifierGroupsForEditModifier();
+    Task<int> GetTotalCountOfItems();
+    Task<List<Itemmodifiergroupmapping>> GetModifierGroupsForEditItem(int itemId);
 }

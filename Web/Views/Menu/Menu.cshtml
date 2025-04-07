@@ -1470,6 +1470,56 @@ $(document).on('change', "#ModifierGroupsInNewItemSelect", function () {
     @* console.log("ModifierGroupsInNewItemSelect changed", modifierGroupId); *@
 });
 
+// Trigger the AJAX call when the edit link is clicked
+    @* $('body').on('click', '.edit-icon', function (e) {
+        e.preventDefault();
+        var itemId = $(this).data('id');
+        $.ajax({
+            url: '@Url.Action("EditMenuItem", "Menu")',
+            type: 'GET',
+            data: { id: itemId },
+            success: function (response) {
+                console.log("amdadad", response.data);
+                $('#EditItemModal').modal('show');
+                $('#EditItemModal .modal-content').html(response); // Inject partial view HTML
+                $('#EditItemModal').modal('show'); // If it's a Bootstrap modal, show it
+                $('#EditItemModal').modal('show');
+                var modal = new bootstrap.Modal(document.getElementById("EditItemModal"));
+                modal.show();
+                $('#EditItemModal ').html(response);
+            },
+            error: function (xhr, status, error, response) {
+                console.log('Error:', error);
+                alert('There was an error loading the item data.');
+            }
+        });
+    });
+
+    $('body').on('submit', '#editMenuItemForm', function (e) {
+        e.preventDefault();
+        var internChoice = $('#ItemType option:selected').val();
+        console.log(internChoice);
+        var formData = $(this).serialize();
+
+        formData += '&#ItemType=' + encodeURIComponent(internChoice);
+        $.ajax({
+            url: '@Url.Action("EditMenuItem", "Menu")',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    $('#EditItemModal').modal('hide');
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('Error:', error);
+                alert('There was an error updating the item.');
+            }
+        });
+    }); *@
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

@@ -6,7 +6,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="editMenuItemForm" asp-controller="Menu" asp-action="EditMenuItem" method="post"
+            <form id="editMenuItemForm"
                 enctype="multipart/form-data">
                 <input type="hidden" id="id" name="id" value="@Model.Items.First().Itemid" />
                 <div class="row">
@@ -156,7 +156,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                 style="padding: 6px !important; border: 1px solid #0066a7; background: transparent; color: #0066a7;">Cancel</button>
-            <button type="submit" class="btn btn-primary" form="editMenuItemForm"
+            <button type="submit" class="btn btn-primary" 
                 style="padding: 6px !important;">Save</button>
         </div>
     </div>

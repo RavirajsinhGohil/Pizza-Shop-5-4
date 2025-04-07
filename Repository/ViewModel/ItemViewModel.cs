@@ -17,10 +17,8 @@ public class ItemViewModel
     public string? ItemShortCode { get; set; }
     public string? Description { get; set; }
     public int? CategoryId { get; set; }
-    public List<int>? ModifierGroupIds { get; set; }
-    public List<ModifierGroupViewModel>? ModifierGroups { get; set; }
-
-    public bool Isdeleted { get; set; }
+    // public List<int>? ModifierGroupIds { get; set; }
+    public bool? Isdeleted { get; set; }
 
     public static implicit operator List<object>(ItemViewModel v)
     {

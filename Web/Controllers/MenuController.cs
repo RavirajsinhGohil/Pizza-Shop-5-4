@@ -162,12 +162,14 @@ public class MenuController : Controller
         try
         {
             var viewModel = _menuService.GetMenuItemForEdit(id);
+            // var htmlString = PartialView("_EditMenuItemModal", viewModel);
+            // return Json(new { success = true, html = htmlString });
             if (viewModel == null)
             {
                 return NotFound();
             }
 
-            return PartialView("_EditMenuItemModal", viewModel);
+        return PartialView("_EditMenuItemModal", viewModel);
         }
         catch (Exception)
         {

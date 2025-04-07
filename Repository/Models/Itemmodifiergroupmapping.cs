@@ -9,7 +9,7 @@ public partial class Itemmodifiergroupmapping
 
     public int? Itemid { get; set; }
 
-    public int? Modifiergroupid { get; set; }
+    public int Modifiergroupid { get; set; }
 
     public virtual Item? Item { get; set; }
 
